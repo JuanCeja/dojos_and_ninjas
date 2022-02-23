@@ -1,4 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask import flash
+from flask_app.models import model_ninja
 
 DATABASE = "dojos_and_ninjas_schema"
 
@@ -64,3 +66,17 @@ class Ninja:
     #     query = "INSERT INTO users (first_name, last_name, email) VALUES(%(first_name)s, %(last_name)s, %(email)s);"
     #     result = connectToMySQL(DATABASE).query_db(query,data)
     #     return result
+
+    @staticmethod
+    def is_valid(model_ninja):
+        is_valid = True
+        if len(model_ninja['first_name']) < 3:
+            is_valid = False
+            flash("First name must be atleast 3 characters.")
+        if len(model_ninja['last_name']) < 3:
+            is_valid = False
+            flash("Last name must be atleast 2 characters.")
+        if len(model_ninja['age']) < 18:
+            is_valid = False
+            flash("You must be atleast 18 years of age.")
+        return is_valid

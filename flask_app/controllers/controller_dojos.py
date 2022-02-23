@@ -1,6 +1,7 @@
 from flask_app import app
 from flask import render_template, redirect, request, session
 from flask_app.models.model_dojo import Dojo
+
 #from fDask_app.models.model_table_name import class_name
 
 @app.route("/")
@@ -13,8 +14,11 @@ def index():
 
 @app.route("/dojo/create", methods=["post"])
 def create_dojo():
-    id = Dojo.create(request.form)
+    if Dojo.is_valid(request.form):
+        id = Dojo.create(request.form)
+        return redirect('/')
     return redirect('/')
+
 
 @app.route("/dojos/<int:id>")
 def show_dojo_with_ninjas(id):

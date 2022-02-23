@@ -1,5 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import model_ninja
+from flask_app.models import model_dojo
+from flask import flash
 
 DATABASE = "dojos_and_ninjas_schema"
 
@@ -62,6 +64,14 @@ class Dojo:
     def delete_one(cls, data):
         query = "DELETE FROM dojos WHERE id = %(id)s;"
         return connectToMySQL(DATABASE).query_dba(query, data)
+
+    @staticmethod
+    def is_valid(model_dojo):
+        is_valid = True
+        if len(model_dojo['name']) < 3:
+            is_valid = False
+            flash("Dojo name must be atleast 3 characters.")
+        return is_valid
 
     # @classmethod
     # def save(cls, data):

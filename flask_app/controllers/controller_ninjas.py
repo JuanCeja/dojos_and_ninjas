@@ -1,7 +1,6 @@
 from flask_app import app
 from flask import render_template, redirect, request, session
 from flask_app.models.model_ninja import Ninja
-from flask_app.models.model_dojo import Dojo
 
 #from flask_app.models.model_table_name import class_name
 
@@ -11,8 +10,11 @@ def ninjas():
 
 @app.route("/create/ninja", methods=["post"])
 def create_ninja():
-    id = Ninja.create(request.form)
+    if Ninja.is_valid(request.form):
+        id = Ninja.create(request.form)
+        return redirect('/ninjas')
     return redirect('/ninjas')
+
 
 # @app.route("/tablename/<int:id>")
 # def show_tablename():
