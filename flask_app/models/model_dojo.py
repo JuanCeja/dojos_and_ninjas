@@ -48,14 +48,21 @@ class Dojo:
 
         dojo = cls(results[0])
         for row in results:
+            # ninja_data = {
+            #     "id": row['ninjas.id'],
+            #     "first_name": row['first_name'],
+            #     "last_name": row['last_name'],
+            #     "age": row['age'],
+            #     "created_at": row['ninjas.created_at'],
+            #     "updated_at": row['ninjas.updated_at']
+            # }
             ninja_data = {
+                **row,
                 "id": row['ninjas.id'],
-                "first_name": row['first_name'],
-                "last_name": row['last_name'],
-                "age": row['age'],
                 "created_at": row['ninjas.created_at'],
                 "updated_at": row['ninjas.updated_at']
             }
+            
             dojo.ninjas.append(model_ninja.Ninja(ninja_data))
         return dojo
 
